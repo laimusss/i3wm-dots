@@ -1,18 +1,15 @@
 #!/bin/bash
 
 # xorg display server installation
-sudo apt install -y xorg
+sudo apt install -y xserver-xorg-core xinit
 # Install i3
 sudo apt install -y i3
-
-# Network Manager & wireguard
-sudo apt install -y wireguard-tools openresolv
 
 # Installation for Appearance management
 sudo apt install -y lxappearance
 
 # File Manager
-sudo apt install -y pcmanfm
+sudo apt install -y thunar thunar-archive-plugin
 
 # Network File Tools/System Events
 sudo apt install -y dialog acpi acpid gvfs-backends arandr
@@ -34,39 +31,43 @@ sudo systemctl enable bluetooth
 sudo apt install -y feh
 
 # Packages needed i3 after installation
-sudo apt install -y xfce4-power-manager numlockx rofi dunst file-roller polybar picom unzip playerctl scrot tumbler xdg-user-dirs-gtk
+sudo apt install -y xfce4-power-manager rofi dunst polybar picom unzip playerctl scrot xdg-user-dirs-gtk
+
+# AmneziaVPN packages
+sudo apt install -y libxcb-cursor0 libxcb-xinerama0
 
 # Additional Software
-sudo apt install -y curl ffmpeg mpv micro git
+sudo apt install -y curl ffmpeg mpv micro nala
 
 # Install fonts
-sudo apt install -y fonts-font-awesome fonts-jetbrains-mono fonts-firacode
+sudo apt install -y fonts-font-awesome fonts-firacode
 
 # Install Display Manager
 sudo apt install -y slim
 
-# Finish Clean
-sudo apt autopurge -y
-
 # Create folders in user directory
 xdg-user-dirs-update
 
-# Установка драйвера WiFi Macbook
-echo ""
-read -p ">>> Установить драйвер WiFi для Macbook? (y/n) " choice
-echo ""
-if [ "$choice" == "y" ]; then
-sudo apt install -y linux-image-$(uname -r|sed 's,[^-]*-[^-]*-,,') linux-headers-$(uname -r|sed 's,[^-]*-[^-]*-,,') broadcom-sta-dkms
-sudo modprobe -r b44 b43 b43legacy ssb brcmsmac bcma
-sudo modprobe wl
-echo ""
-echo "| Драйвер установлен"
-else
-echo "| Установка пропущена"
-fi
+#Additional
+source onlyoffice-install-debian.sh
+source wifi-macbookpro.sh
+source zen-browser-install.sh
 
 # Themes
 mkdir /home/st/.themes
 cd /home/st/.themes && git clone https://github.com/vinceliuice/Orchis-theme.git && cd Orchis-theme/ && sudo bash ./install.sh -c dark -s compact --tweaks dracula --round 1 && cd
+
+#Afterinstall
+sudo cp -r --force 90-touchpad.conf /etc/X11/xorg.conf.d/
+sudo cp -r --force .xinitrc ~/
+sudo cp -r --force .Xresources ~/
+sudo cp -r --force alacritty/ ~/
+sudo cp -r --force dunst/ ~/
+sudo cp -r --force i3/ ~/
+sudo cp -r --force polybar/ ~/
+sudo cp -r --force rofi/ ~/
+
+# Finish Clean
+sudo apt autopurge -y
 
 echo "Setup Complete! Please, reboot your computer!"
