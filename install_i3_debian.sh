@@ -1,7 +1,11 @@
 #!/bin/bash
 
+# GIT CURL
+sudo apt install -y git curl
+
 # xorg display server installation
 sudo apt install -y xserver-xorg-core xinit
+
 # Install i3
 sudo apt install -y i3
 
