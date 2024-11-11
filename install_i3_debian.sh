@@ -63,7 +63,7 @@ cd /home/st/.themes && git clone https://github.com/vinceliuice/Orchis-theme.git
 
 #Afterinstall
 sudo cp --force 90-touchpad.conf /etc/X11/xorg.conf.d/
-cp -r --force .moc/ ~/
+cp -r --force moc/ ~/
 cp --force .xinitrc ~/
 cp --force .Xresources ~/
 cp -r --force alacritty/ ~/.config/
