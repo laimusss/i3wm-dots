@@ -62,7 +62,7 @@ mkdir /home/st/.themes
 cd /home/st/.themes && git clone https://github.com/vinceliuice/Orchis-theme.git && cd Orchis-theme/ && sudo bash ./install.sh -c dark -s compact --tweaks dracula --round 1 && cd
 
 #Afterinstall
-sudo cp --force 90-touchpad.conf /etc/X11/xorg.conf.d/
+cp --force 90-touchpad.conf /etc/X11/xorg.conf.d/
 cp --force .xinitrc ~/
 cp --force .Xresources ~/
 cp -r --force alacritty/ ~/.config/
