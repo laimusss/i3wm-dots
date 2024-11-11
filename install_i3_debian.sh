@@ -35,13 +35,13 @@ sudo systemctl enable bluetooth
 sudo apt install -y feh
 
 # Packages needed i3 after installation
-sudo apt install -y xfce4-power-manager rofi dunst polybar picom unzip playerctl scrot xdg-user-dirs-gtk
+sudo apt install -y network-manager xfce4-power-manager rofi dunst polybar picom unzip playerctl scrot xdg-user-dirs-gtk
 
 # AmneziaVPN packages
 sudo apt install -y libxcb-cursor0 libxcb-xinerama0
 
 # Additional Software
-sudo apt install -y curl ffmpeg mpv micro nala
+sudo apt install -y curl ffmpeg mpv micro nala moc
 
 # Install fonts
 sudo apt install -y fonts-font-awesome fonts-firacode
@@ -62,7 +62,8 @@ mkdir /home/st/.themes
 cd /home/st/.themes && git clone https://github.com/vinceliuice/Orchis-theme.git && cd Orchis-theme/ && sudo bash ./install.sh -c dark -s compact --tweaks dracula --round 1 && cd
 
 #Afterinstall
-cp --force 90-touchpad.conf /etc/X11/xorg.conf.d/
+sudo cp --force 90-touchpad.conf /etc/X11/xorg.conf.d/
+cp -r --force .moc/ ~/
 cp --force .xinitrc ~/
 cp --force .Xresources ~/
 cp -r --force alacritty/ ~/.config/
