@@ -62,14 +62,14 @@ mkdir /home/st/.themes
 cd /home/st/.themes && git clone https://github.com/vinceliuice/Orchis-theme.git && cd Orchis-theme/ && sudo bash ./install.sh -c dark -s compact --tweaks dracula --round 1 && cd
 
 #Afterinstall
-sudo cp -r --force 90-touchpad.conf /etc/X11/xorg.conf.d/
-sudo cp -r --force .xinitrc ~/
-sudo cp -r --force .Xresources ~/
-sudo cp -r --force alacritty/ ~/
-sudo cp -r --force dunst/ ~/
-sudo cp -r --force i3/ ~/
-sudo cp -r --force polybar/ ~/
-sudo cp -r --force rofi/ ~/
+sudo cp --force 90-touchpad.conf /etc/X11/xorg.conf.d/
+sudo cp --force .xinitrc ~/
+sudo cp --force .Xresources ~/
+sudo cp -r --force alacritty/ ~/.config/
+sudo cp -r --force dunst/ ~/.config/
+sudo cp -r --force i3/ ~/.config/
+sudo cp -r --force polybar/ ~/.config/
+sudo cp -r --force rofi/ ~/.config/
 
 # Finish Clean
 sudo apt autopurge -y
