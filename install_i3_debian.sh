@@ -63,14 +63,14 @@ cd /home/st/.themes && git clone https://github.com/vinceliuice/Orchis-theme.git
 
 #Afterinstall
 sudo \cp --force ~/i3wm-dots/90-touchpad.conf /etc/X11/xorg.conf.d/
-\cp -r --force moc/ ~
+\cp -rp --force ~/i3wm-dots/moc/ ~
 \cp --force .xinitrc ~
 \cp --force .Xresources ~
-\cp -r --force alacritty/ ~/.config/
-\cp -r --force dunst/ ~/.config/
-\cp -r --force i3/ ~/.config/
-\cp -r --force polybar/ ~/.config/
-\cp -r --force rofi/ ~/.config/
+\cp -rp --force ~/i3wm-dots/alacritty/ ~/.config/
+\cp -rp --force ~/i3wm-dots/dunst/ ~/.config/
+\cp -rp --force ~/i3wm-dots/i3/ ~/.config/
+\cp -rp --force ~/i3wm-dots/polybar/ ~/.config/
+\cp -rp --force ~/i3wm-dots/rofi/ ~/.config/
 
 # Finish Clean
 sudo apt autopurge -y
