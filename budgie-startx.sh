@@ -2,8 +2,17 @@
 
 # Убедитесь, что вы запускаете скрипт с правами суперпользователя
 if [[ "$EUID" -ne 0 ]]; then
-  echo "Пожалуйста, запустите скрипт от имени суперпользователя (sudo)."
-  exit 1
+ echo "Пожалуйста, запустите скрипт от имени суперпользователя (sudo)."
+ exit 1
+fi
+
+# Установка nala, если он не установлен
+if ! dpkg -l | grep -q nala; then
+ echo "Установка пакетного менеджера nala..."
+ apt update
+ apt install -y nala
+else
+ echo "Пакетный менеджер nala уже установлен."
 fi
 
 # Запрос имени пользователя для автоматического входа
@@ -22,36 +31,36 @@ EOF
 profile_file="/home/$username/.profile"
 
 if [[ ! -f "$profile_file" ]]; then
-  echo "$profile_file не существует, создаю новый файл."
-  touch "$profile_file"
+ echo "$profile_file не существует, создаю новый файл."
+ touch "$profile_file"
 fi
 
 if ! grep -q "startx" "$profile_file"; then
-  echo "# Запуск X-сессии автоматически, если она еще не запущена" >> "$profile_file"
-  echo "if [[ -z \"\$DISPLAY\" ]] && [[ \$(tty) = /dev/tty1 ]]; then" >> "$profile_file"
-  echo "  exec startx" >> "$profile_file"
-  echo "fi" >> "$profile_file"
+ echo "# Запуск X-сессии автоматически, если она еще не запущена" >> "$profile_file"
+ echo "if [[ -z \"\$DISPLAY\" ]] && [[ \$(tty) = /dev/tty1 ]]; then" >> "$profile_file"
+ echo " exec startx" >> "$profile_file"
+ echo "fi" >> "$profile_file"
 fi
 
 # Создание файла ~/.xinitrc для запуска Budgie
 xinitrc_file="/home/$username/.xinitrc"
 
 if [[ ! -f "$xinitrc_file" ]]; then
-  echo "$xinitrc_file не существует, создаю новый файл."
-  touch "$xinitrc_file"
+ echo "$xinitrc_file не существует, создаю новый файл."
+ touch "$xinitrc_file"
 fi
 
 if ! grep -q "budgie-desktop" "$xinitrc_file"; then
-  echo "exec budgie-desktop" > "$xinitrc_file"
+ echo "exec budgie-desktop" > "$xinitrc_file"
 fi
 
 # Установка пакета budgie-desktop, если он не установлен
 if ! dpkg -l | grep -q budgie-desktop; then
-  echo "Установка пакета budgie-desktop..."
-  apt update
-  apt install -y xinit alacritty budgie-desktop
+ echo "Установка пакета budgie-desktop..."
+ nala update
+ nala install -y xserver-xorg-core xinit budgie-desktop alacritty
 else
-  echo "Пакет budgie-desktop уже установлен."
+ echo "Пакет budgie-desktop уже установлен."
 fi
 
 # Завершение
