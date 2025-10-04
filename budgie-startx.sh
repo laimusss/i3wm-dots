@@ -63,5 +63,32 @@ else
  echo "Пакет budgie-desktop уже установлен."
 fi
 
+# Установка тем
+echo "Установка тем..."
+THEMES_DIR="/home/$username/.themes"
+THEME_REPO="https://github.com/vinceliuice/Orchis-theme.git"
+
+mkdir -p "$THEMES_DIR"
+if [[ ! -d "$THEMES_DIR/Orchis-theme" ]]; then
+ git clone --depth-1 "$THEME_REPO" "$THEMES_DIR/Orchis-theme"
+ cd "$THEMES_DIR/Orchis-theme"
+ sudo bash ./install.sh -c dark -s compact --tweaks dracula --round 1
+ cd - # Вернуться в исходную директорию
+fi
+
+# Выполнение дополнительных скриптов
+echo "Выполнение дополнительных скриптов..."
+for script in onlyoffice-install-debian.sh wifi-macbookpro.sh zen-browser-install.sh; do
+ if [[ -f "$script" ]]; then
+  source "$script"
+ else
+  echo "Файл $script не найден, пропускаем."
+ fi
+done
+
+# Очистка
+echo "Очистка устаревших пакетов..."
+nala autopurge -y
+
 # Завершение
 echo "Настройка завершена. Пожалуйста, перезагрузите систему."
