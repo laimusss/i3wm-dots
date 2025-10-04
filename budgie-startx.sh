@@ -72,7 +72,7 @@ mkdir -p "$THEMES_DIR"
 if [[ ! -d "$THEMES_DIR/Orchis-theme" ]]; then
  git clone "$THEME_REPO" "$THEMES_DIR/Orchis-theme"
  cd "$THEMES_DIR/Orchis-theme"
- sudo bash ./install.sh -c dark -s compact --tweaks dracula --round 1
+ bash ./install.sh -c dark -s compact --tweaks dracula --round 1
  cd - # Вернуться в исходную директорию
 fi
 
