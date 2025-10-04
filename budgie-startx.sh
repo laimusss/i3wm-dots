@@ -49,7 +49,7 @@ fi
 if ! dpkg -l | grep -q budgie-desktop; then
   echo "Установка пакета budgie-desktop..."
   apt update
-  apt install -y budgie-desktop
+  apt install -y xinit alacritty budgie-desktop
 else
   echo "Пакет budgie-desktop уже установлен."
 fi
