@@ -70,7 +70,7 @@ THEME_REPO="https://github.com/vinceliuice/Orchis-theme.git"
 
 mkdir -p "$THEMES_DIR"
 if [[ ! -d "$THEMES_DIR/Orchis-theme" ]]; then
- git clone --depth-1 "$THEME_REPO" "$THEMES_DIR/Orchis-theme"
+ git clone "$THEME_REPO" "$THEMES_DIR/Orchis-theme"
  cd "$THEMES_DIR/Orchis-theme"
  sudo bash ./install.sh -c dark -s compact --tweaks dracula --round 1
  cd - # Вернуться в исходную директорию
@@ -78,11 +78,24 @@ fi
 
 # Выполнение дополнительных скриптов
 echo "Выполнение дополнительных скриптов..."
-for script in onlyoffice-install-debian.sh wifi-macbookpro.sh zen-browser-install.sh; do
+for script in onlyoffice-install-debian.sh wifi-macbookpro.sh; do
  if [[ -f "$script" ]]; then
   source "$script"
  else
   echo "Файл $script не найден, пропускаем."
+ fi
+done
+
+# Установка необходимых пакетов, если они не установлены
+required_packages=("xserver-xorg-core" "xinit" "budgie-desktop" "pcmanfm" "file-roller" "rofi" "libxcb-cursor0" "libxcb-xinerama0" "alacritty")
+
+for package in "${required_packages[@]}"; do
+ if ! dpkg -l | grep -q "$package"; then
+   echo "Установка пакета $package..."
+   nala update
+   nala install -y "$package"
+ else
+   echo "Пакет $package уже установлен."
  fi
 done
 
