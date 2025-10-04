@@ -49,8 +49,9 @@ fi
 
 # Установка необходимых пакетов
 echo "Установка необходимых пакетов..."
-apt update
-apt install -y \
+apt install nala
+nala update
+nala install -y \
  git curl \
  xserver-xorg-core xinit \
  i3 \
@@ -80,9 +81,9 @@ xdg-user-dirs-update
 echo "Выполнение дополнительных скриптов..."
 for script in onlyoffice-install-debian.sh wifi-macbookpro.sh zen-browser-install.sh; do
  if [[ -f "$script" ]]; then
-  source "$script"
+ source "$script"
  else
-  echo "Файл $script не найден, пропускаем."
+ echo "Файл $script не найден, пропускаем."
  fi
 done
 
@@ -93,7 +94,7 @@ THEME_REPO="https://github.com/vinceliuice/Orchis-theme.git"
 
 mkdir -p "$THEMES_DIR"
 if [[ ! -d "$THEMES_DIR/Orchis-theme" ]]; then
- git clone --depth=1 "$THEME_REPO" "$THEMES_DIR/Orchis-theme"
+ git clone "$THEME_REPO" "$THEMES_DIR/Orchis-theme"
  cd "$THEMES_DIR/Orchis-theme"
  sudo bash ./install.sh -c dark -s compact --tweaks dracula --round 1
  cd - # Вернуться в исходную директорию
@@ -104,20 +105,22 @@ echo "Копирование конфигурационных файлов..."
 CONFIG_DIR="$HOME/i3wm-dots"
 for config_item in 90-touchpad.conf moc .xinitrc .Xresources; do
  if [[ -e "$CONFIG_DIR/$config_item" ]]; then
-  sudo cp -f "$CONFIG_DIR/$config_item" "/etc/X11/xorg.conf.d/" || cp -f "$CONFIG_DIR/$config_item" ~
+ sudo cp -f "$CONFIG_DIR/$config_item" "/etc/X11/xorg.conf.d/" || cp -f "$CONFIG_DIR/$config_item" ~
  fi
 done
 
 # Копирование директорий конфигурации
 for dir in moc alacritty dunst i3 polybar rofi; do
  if [[ -d "$CONFIG_DIR/$dir" ]]; then
-  cp -rp "$CONFIG_DIR/$dir" ~/.config/
+ cp -rp "$CONFIG_DIR/$dir" ~/.config/
  fi
 done
 
 # Очистка
 echo "Очистка устаревших пакетов..."
-sudo apt autoremove -y
+sudo nala autoremove -y
 
+# Завершение
+echo "Наст```bash
 # Завершение
 echo "Настройка завершена! Пожалуйста, перезагрузите компьютер!"
